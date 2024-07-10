@@ -16,6 +16,7 @@ env
 *.out
 *.exe
 */*.out
+objdir/*
 
 # Debug files
 *.dSYM/
