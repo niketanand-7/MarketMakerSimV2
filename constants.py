@@ -1,0 +1,1 @@
+STOCKS = ['AAPL', 'AMZN', 'GOOG', 'META', 'MRNA', 'MSFT', 'NFLX', 'NVDA', 'PLTR', 'SOFI', 'TSLA']
