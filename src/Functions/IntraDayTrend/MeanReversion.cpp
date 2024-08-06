@@ -5,8 +5,6 @@
 
 using namespace std;
 
-
-
 /*
     @brief: Calculate the mean of the last window prices
     @param prevPrices: vector of current prices
