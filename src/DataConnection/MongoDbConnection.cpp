@@ -1,39 +1,25 @@
-#include <cstdint>
+#include "mongodb_utils.hpp"
 #include <iostream>
-#include <vector>
 #include <bsoncxx/json.hpp>
-#include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
 
-int main()
-{ 
-  try
-  {
-    // Create an instance.
+void printCollectionData(const std::string& dbName, const std::string& collectionName)
+{
     mongocxx::instance inst{};
-  
-    // Replace the connection string with your MongoDB deployment's connection string.
     const auto uri = mongocxx::uri{"mongodb://localhost:27017/"};
-  
-    // Set the version of the Stable API on the client.
-    mongocxx::options::client client_options;
-    const auto api = mongocxx::options::server_api{ mongocxx::options::server_api::version::k_version_1 };
-    client_options.server_api_opts(api);
-  
-    // Setup the connection and get a handle on the "admin" database.
-    mongocxx::client conn{ uri, client_options };
-    mongocxx::database db = conn["admin"];
-    
-    // Ping the database.
-    const auto ping_cmd = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("ping", 1));
-    db.run_command(ping_cmd.view());
-    std::cout << "Pinged your deployment. You successfully connected to MongoDB!" << std::endl;
-  }
-  catch (const std::exception& e) 
-  {
-    // Handle errors.
-    std::cout<< "Exception: " << e.what() << std::endl;
-  }
+    mongocxx::client client{uri};
 
-  return 0;
+    auto db = client[dbName];
+    auto collection = db[collectionName];
+
+    auto cursor = collection.find({});
+    for (const auto& doc : cursor) {
+        std::cout << bsoncxx::to_json(doc) << std::endl;
+    }
+}
+
+int main()
+{
+    printCollectionData("day_stock_data", "intraday");
+    return 0;
 }
