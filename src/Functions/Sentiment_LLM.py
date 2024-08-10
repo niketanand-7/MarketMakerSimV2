@@ -1,7 +1,7 @@
 # from constants import STOCKS
 from llama_index.llms.ollama import Ollama
 from llama_index.core.llms import ChatMessage
-from Options_data import OptionsData
+from Functions.OptionsData import OptionsData
 
 '''
 Sentiment indicators gauge market psychology in the form of investor or consumer behavior and beliefs that may influence the market.
